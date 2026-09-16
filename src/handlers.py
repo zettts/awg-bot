@@ -131,14 +131,24 @@ async def start_cmd(message: Message, bot: Bot):
             update_data["username"] = message.from_user.username
     else:
         is_admin = message.from_user.id in config.ADMINS
+        # Пришёл из Mini App с выбранным тарифом — покупатель, пробный период не нужен
+        came_to_buy = "buy_" in (message.text or "")
         user = await create_user(
             telegram_id=message.from_user.id, 
             full_name=message.from_user.full_name,
             username=message.from_user.username,
             is_admin=is_admin
         )
-        await message.answer(f"Добро пожаловать в VPN бота `{(await bot.get_me()).full_name}`!\nВам предоставлен **бесплатный** тестовый период на **3 дня**!", parse_mode='Markdown')
-        await asyncio.sleep(2)
+        if came_to_buy:
+            with Session() as session:
+                db_user = session.query(User).filter_by(telegram_id=message.from_user.id).first()
+                if db_user:
+                    db_user.subscription_end = datetime.utcnow() - timedelta(minutes=1)
+                    session.commit()
+            user = await get_user(message.from_user.id)
+        else:
+            await message.answer(f"Добро пожаловать в VPN бота `{(await bot.get_me()).full_name}`!\nВам предоставлен **бесплатный** тестовый период на **3 дня**!", parse_mode='Markdown')
+            await asyncio.sleep(2)
     
     # Обновляем данные если есть изменения
     if update_data:
@@ -1228,7 +1238,7 @@ PLATFORM_TEXTS = {
         "📱 <b>Подключение на iPhone / iPad</b>\n\n"
         "1. Установите DefaultVPN по кнопке ниже\n"
         "2. Скопируйте ключ — нажмите и удерживайте текст под инструкцией\n"
-        "3. В приложении нажмите ➕ → «Вставить» → «Добавить» → «Подключить»\n\n"
+        "3. В приложении нажмите ➕ → «Вставить» → «Добавить» → Connect\n\n"
         "✅ Готово"
     ),
     "android": (
@@ -1304,7 +1314,7 @@ async def platform_instructions(callback: CallbackQuery):
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform in ("ios", "android"):
+    if platform == "android":
         builder.button(text="📷 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="⬅️ Назад", callback_data="connect")
     builder.button(text="🏠 В меню", callback_data="back_to_menu")
@@ -1390,7 +1400,7 @@ async def send_platform_instructions(message: Message, user, platform: str):
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform in ("ios", "android"):
+    if platform == "android":
         builder.button(text="\U0001f4f7 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="\u2b05\ufe0f Назад", callback_data="connect")
     builder.button(text="\U0001f3e0 В меню", callback_data="back_to_menu")
@@ -1507,7 +1517,7 @@ async def send_platform_instructions_to(bot: Bot, chat_id: int, user, platform: 
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform in ("ios", "android"):
+    if platform == "android":
         builder.button(text="\U0001f4f7 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="\u2b05\ufe0f Назад", callback_data="connect")
     builder.button(text="\U0001f3e0 В меню", callback_data="back_to_menu")
