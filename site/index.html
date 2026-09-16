@@ -3,354 +3,260 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TopVPN — подписка VLESS</title>
-
-  <!-- Tailwind CDN (ок для лендинга; можно заменить на собранный CSS позже) -->
+  <title>TopVPN — быстрый доступ без ограничений</title>
+  <meta name="description" content="VPN на протоколе AmneziaWG 3.1. Оплата в Telegram, подключение за минуту. Работает там, где остальные не проходят." />
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
-    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
     .hero-gradient { background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 55%, #1e40af 100%); }
   </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900">
-  <!-- Навигация -->
-  <nav class="container mx-auto p-6 flex justify-between items-center">
+  <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
     <a href="#home" class="text-2xl font-extrabold text-blue-600 tracking-tight">TopVPN</a>
-
     <div class="hidden md:flex space-x-8 font-semibold text-slate-600">
       <a href="#how" class="hover:text-blue-600 transition">Как работает</a>
-      <a href="#guides" class="hover:text-blue-600 transition">Гайды</a>
       <a href="#apps" class="hover:text-blue-600 transition">Приложения</a>
       <a href="#pricing" class="hover:text-blue-600 transition">Тарифы</a>
-      <a href="#pay" class="hover:text-blue-600 transition">Оплата</a>
+      <a href="#faq" class="hover:text-blue-600 transition">Вопросы</a>
       <a href="#contacts" class="hover:text-blue-600 transition">Контакты</a>
     </div>
-
-    <a
-      href="https://t.me/TopVpnXray_bot"
-      target="_blank" rel="noopener"
-      class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition"
-    >Подключить в Telegram</a>
+    <a href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener"
+       class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition">Подключить</a>
   </nav>
 
-  <!-- Hero -->
-  <header id="home" class="hero-gradient text-white py-24 px-6 rounded-b-[40px] md:rounded-b-[80px]">
+  <header id="home" class="hero-gradient text-white py-10 md:py-14 px-6 rounded-b-[40px] md:rounded-b-[80px]">
     <div class="container mx-auto text-center max-w-4xl">
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-        Подписка VLESS: быстро, удобно, без лишних настроек
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+        Быстрый доступ без ограничений
       </h1>
-      <p class="text-xl mb-10 opacity-90">
-        Оплата → ссылка-подписка с конфигурациями → импорт в приложение. Управление подпиской — в Telegram.
+      <p class="text-xl mb-6 opacity-90">
+        Работает там, где остальные не проходят. Оплата и управление — в Telegram.
       </p>
-
       <div class="flex flex-col md:flex-row justify-center gap-4">
-        <a
-          href="https://t.me/TopVpnXray_bot"
-          target="_blank" rel="noopener"
-          class="bg-white text-blue-700 font-bold px-10 py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition"
-        >Подключить в Telegram</a>
-
-        <a
-          href="#apps"
-          class="bg-blue-500/20 border border-blue-300 text-white font-bold px-10 py-4 rounded-2xl hover:bg-blue-500/35 transition"
-        >Скачать приложения</a>
+        <a href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener"
+           class="bg-white text-blue-700 font-bold px-10 py-4 rounded-2xl shadow-xl hover:scale-[1.02] transition">Подключить за минуту</a>
+        <a href="#how" class="bg-blue-500/20 border border-blue-300 text-white font-bold px-10 py-4 rounded-2xl hover:bg-blue-500/35 transition">Как это работает</a>
       </div>
-
-      <div class="mt-10 flex flex-wrap gap-3 justify-center">
-        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">VLESS</span>
-        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">Ссылка‑подписка</span>
-        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">iOS / Android / Windows</span>
+      <div class="mt-6 flex flex-wrap gap-3 justify-center">
+        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">AmneziaWG 3.1</span>
+        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">Маскировка трафика</span>
+        <span class="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold">iOS · Android · Windows · macOS · Linux</span>
       </div>
     </div>
   </header>
 
-  <!-- How it works -->
-  <section id="how" class="py-20 container mx-auto px-6">
-    <div class="text-center mb-16">
+  <section id="how" class="py-6 md:py-10 container mx-auto px-6">
+    <div class="text-center mb-5">
       <h2 class="text-3xl font-bold mb-4">Как это работает</h2>
-      <p class="text-slate-500">3 шага и вы в сети.</p>
+      <p class="text-slate-500">Три шага — и вы в сети.</p>
     </div>
-
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6">💳</div>
-        <h3 class="text-xl font-bold mb-3">Оплатите тариф</h3>
-        <p class="text-slate-600 leading-relaxed">Выберите срок подписки и оплатите удобным способом.</p>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
+        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4">💳</div>
+        <h3 class="text-xl font-bold mb-3">Выберите тариф</h3>
+        <p class="text-slate-600 leading-relaxed">Откройте TopVPN в Telegram, выберите срок и устройство. Оплата картой или через СБП.</p>
       </div>
-
-      <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🔗</div>
-        <h3 class="text-xl font-bold mb-3">Получите ссылку‑подписку</h3>
-        <p class="text-slate-600 leading-relaxed">Бот выдаст ссылку с конфигурациями VLESS и инструкцию импорта.</p>
+      <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
+        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4">📲</div>
+        <h3 class="text-xl font-bold mb-3">Получите доступ</h3>
+        <p class="text-slate-600 leading-relaxed">Сразу после оплаты бот пришлёт ключ или файл настроек и подскажет, что делать дальше.</p>
       </div>
-
-      <div class="p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-violet-100 rounded-2xl flex items-center justify-center text-3xl mb-6">✅</div>
-        <h3 class="text-xl font-bold mb-3">Импортируйте и включите</h3>
-        <p class="text-slate-600 leading-relaxed">Вставьте ссылку в клиент, обновите подписку и подключайтесь.</p>
+      <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
+        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4">🚀</div>
+        <h3 class="text-xl font-bold mb-3">Включите и пользуйтесь</h3>
+        <p class="text-slate-600 leading-relaxed">Импортируйте настройки в приложение и нажмите «Подключить». Всё, интернет без границ.</p>
       </div>
     </div>
-
-    <div class="mt-10 text-center">
-      <a href="#guides" class="inline-flex items-center gap-2 font-bold text-blue-700 hover:text-blue-800 transition">
-        Перейти к гайдам →
-      </a>
+    <div class="mt-6 text-center">
+      <a href="#apps" class="inline-flex items-center gap-2 font-bold text-blue-700 hover:text-blue-800 transition">Какое приложение нужно →</a>
     </div>
   </section>
 
-  <!-- Guides -->
-  <section id="guides" class="py-20 container mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold mb-4">Гайды</h2>
-      <p class="text-slate-500">Коротко и по делу — выберите платформу.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-10">
-      <a href="#ios" class="block p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🍎</div>
-        <h3 class="text-xl font-bold mb-2">iOS / iPadOS</h3>
-        <p class="text-slate-600 leading-relaxed">Скачать клиент → импорт подписки → включить.</p>
-        <div class="mt-5 font-bold text-blue-700">Открыть →</div>
-      </a>
-
-      <a href="#android" class="block p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🤖</div>
-        <h3 class="text-xl font-bold mb-2">Android</h3>
-        <p class="text-slate-600 leading-relaxed">v2rayNG / Hiddify: вставьте subscription URL.</p>
-        <div class="mt-5 font-bold text-blue-700">Открыть →</div>
-      </a>
-
-      <a href="#windows" class="block p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🪟</div>
-        <h3 class="text-xl font-bold mb-2">Windows</h3>
-        <p class="text-slate-600 leading-relaxed">v2rayN: добавьте subscription URL и обновите.</p>
-        <div class="mt-5 font-bold text-blue-700">Открыть →</div>
-      </a>
-    </div>
-
-    <div class="mt-14 grid md:grid-cols-3 gap-8">
-      <div id="ios" class="p-8 bg-white rounded-3xl border border-slate-100">
-        <h3 class="text-lg font-extrabold mb-3">iOS / iPadOS — шаги</h3>
-        <ol class="list-decimal pl-5 text-slate-600 space-y-2">
-          <li>Установите клиент (см. «Приложения» ниже).</li>
-          <li>Откройте ссылку подписки из бота.</li>
-          <li>Импортируйте профиль и включите подключение.</li>
-        </ol>
-      </div>
-
-      <div id="android" class="p-8 bg-white rounded-3xl border border-slate-100">
-        <h3 class="text-lg font-extrabold mb-3">Android — шаги</h3>
-        <ol class="list-decimal pl-5 text-slate-600 space-y-2">
-          <li>Установите v2rayNG или Hiddify.</li>
-          <li>В клиенте: Import / Subscription → вставьте URL.</li>
-          <li>Обновите подписку и подключитесь.</li>
-        </ol>
-      </div>
-
-      <div id="windows" class="p-8 bg-white rounded-3xl border border-slate-100">
-        <h3 class="text-lg font-extrabold mb-3">Windows — шаги</h3>
-        <ol class="list-decimal pl-5 text-slate-600 space-y-2">
-          <li>Установите v2rayN.</li>
-          <li>Добавьте subscription URL (Manage servers → Add).</li>
-          <li>Update subscription → выберите профиль → Connect.</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="mt-10 text-center">
-      <a
-        href="https://t.me/TopVpnXray_bot"
-        target="_blank" rel="noopener"
-        class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-blue-600 text-white font-extrabold hover:bg-blue-700 transition"
-      >Получить ссылку в Telegram</a>
-    </div>
-  </section>
-
-  <!-- Apps -->
-  <section id="apps" class="bg-white py-20 px-6">
+  <section id="apps" class="bg-white py-6 md:py-10 px-6">
     <div class="container mx-auto">
-      <div class="text-center mb-12">
+      <div class="text-center mb-5">
         <h2 class="text-3xl font-bold mb-4">Приложения</h2>
-        <p class="text-slate-500">Скачивайте только с официальных страниц разработчиков.</p>
+        <p class="text-slate-500">Точную инструкцию под ваше устройство пришлёт бот после оплаты.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <div class="p-8 rounded-3xl border-2 border-slate-100 flex flex-col">
-          <h3 class="text-xl font-extrabold mb-1">v2rayNG</h3>
-          <div class="text-slate-500 mb-6">Android</div>
-          <div class="mt-auto grid gap-3">
-            <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
-               href="https://github.com/2dust/v2rayNG" target="_blank" rel="noopener">GitHub</a>
-            <a class="w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
-               href="https://github.com/2dust/v2rayNG/releases" target="_blank" rel="noopener">Релизы</a>
-          </div>
+      <div class="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
+        <div class="p-6 rounded-3xl border-2 border-slate-100 flex flex-col">
+          <div class="text-3xl mb-4">📱</div>
+          <h3 class="text-xl font-extrabold mb-1">DefaultVPN</h3>
+          <div class="text-slate-500 mb-4">iPhone / iPad</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Подключение ключом: скопировали из бота — вставили в приложение.</p>
+          <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://apps.apple.com/app/defaultvpn/id6744725017" target="_blank" rel="noopener">App Store</a>
         </div>
 
-        <div class="p-8 rounded-3xl border-2 border-slate-100 flex flex-col">
-          <h3 class="text-xl font-extrabold mb-1">v2rayN</h3>
-          <div class="text-slate-500 mb-6">Windows</div>
-          <div class="mt-auto grid gap-3">
-            <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
-               href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener">GitHub</a>
-            <a class="w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
-               href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener">Релизы</a>
-          </div>
+        <div class="p-6 rounded-3xl border-2 border-slate-100 flex flex-col">
+          <div class="text-3xl mb-4">🤖</div>
+          <h3 class="text-xl font-extrabold mb-1">AmneziaWG</h3>
+          <div class="text-slate-500 mb-4">Android</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Откройте файл настроек из чата или отсканируйте QR-код.</p>
+          <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://play.google.com/store/apps/details?id=org.amnezia.awg" target="_blank" rel="noopener">Google Play</a>
         </div>
 
-        <div class="p-8 rounded-3xl border-2 border-slate-100 flex flex-col">
-          <h3 class="text-xl font-extrabold mb-1">Hiddify</h3>
-          <div class="text-slate-500 mb-6">iOS / Android / Desktop</div>
-          <div class="mt-auto grid gap-3">
-            <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
-               href="https://github.com/hiddify/hiddify-app" target="_blank" rel="noopener">GitHub</a>
-            <a class="w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
-               href="https://github.com/hiddify/hiddify-app/releases" target="_blank" rel="noopener">Релизы</a>
-          </div>
+        <div class="p-6 rounded-3xl border-2 border-slate-100 flex flex-col">
+          <div class="text-3xl mb-4">🪟</div>
+          <h3 class="text-xl font-extrabold mb-1">AmneziaWG</h3>
+          <div class="text-slate-500 mb-4">Windows</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Установите, импортируйте файл настроек, нажмите Connect.</p>
+          <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://github.com/amnezia-vpn/amneziawg-windows-client/releases/download/3.1.0/amneziawg-amd64-3.1.0.msi" target="_blank" rel="noopener">Скачать .msi</a>
         </div>
-      </div>
 
-      <div class="text-center mt-10">
-        <a href="#pricing" class="font-bold text-blue-700 hover:text-blue-800 transition">Перейти к тарифам →</a>
+        <div class="p-6 rounded-3xl border-2 border-slate-100 flex flex-col">
+          <div class="text-3xl mb-4">🍎</div>
+          <h3 class="text-xl font-extrabold mb-1">AmneziaWG</h3>
+          <div class="text-slate-500 mb-4">macOS</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Import tunnel(s) from file — и подключение готово.</p>
+          <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://apps.apple.com/app/amneziawg/id6478942365" target="_blank" rel="noopener">App Store</a>
+        </div>
+
+        <div class="p-6 rounded-3xl border-2 border-slate-100 flex flex-col">
+          <div class="text-3xl mb-4">🐧</div>
+          <h3 class="text-xl font-extrabold mb-1">AmneziaVPN</h3>
+          <div class="text-slate-500 mb-4">Linux</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Запустите установщик .run, добавьте ключ или файл настроек.</p>
+          <a class="w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://github.com/amnezia-vpn/amnezia-client/releases/latest" target="_blank" rel="noopener">GitHub Releases</a>
+        </div>
+
+        <div class="p-6 rounded-3xl border-2 border-blue-100 bg-blue-50 flex flex-col">
+          <div class="text-3xl mb-4">💬</div>
+          <h3 class="text-xl font-extrabold mb-1">Не знаете, что выбрать?</h3>
+          <div class="text-slate-500 mb-4">Поможем</div>
+          <p class="text-slate-600 text-sm mb-6 flex-grow">Бот определит по вашему устройству и пришлёт готовую инструкцию.</p>
+          <a class="w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-white transition"
+             href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener">Открыть TopVPN</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="py-20 px-6">
+  <section id="pricing" class="py-6 md:py-10 px-6">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12">Тарифы</h2>
+      <h2 class="text-3xl font-bold text-center mb-4">Тарифы</h2>
+      <p class="text-slate-500 text-center mb-5">Чем дольше срок — тем выгоднее месяц.</p>
 
-      <div class="grid md:grid-cols-3 max-w-6xl mx-auto gap-8">
-        <div class="p-10 rounded-3xl border-2 border-slate-100 bg-white flex flex-col">
-          <h3 class="text-lg font-bold text-slate-500 uppercase mb-2">30 дней</h3>
-          <div class="text-5xl font-extrabold mb-6">$9 <span class="text-lg font-normal text-slate-400">/мес</span></div>
-          <ul class="space-y-4 mb-10 flex-grow text-slate-600">
-            <li>✅ 1 устройство</li>
-            <li>✅ Ссылка‑подписка</li>
-            <li>✅ Поддержка в Telegram</li>
-          </ul>
-          <a class="w-full text-center py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
-             href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener">Подключить</a>
+      <div class="grid md:grid-cols-4 max-w-6xl mx-auto gap-5">
+        <div class="p-6 rounded-3xl border-2 border-slate-100 bg-white flex flex-col">
+          <h3 class="text-sm font-bold text-slate-500 uppercase mb-2">1 месяц</h3>
+          <div class="text-4xl font-extrabold mb-1">500 ₽</div>
+          <div class="text-slate-400 mb-5">500 ₽ в месяц</div>
+          <a class="mt-auto w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
+             href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener">Выбрать</a>
         </div>
 
-        <div class="p-10 rounded-3xl border-2 border-blue-600 bg-blue-50/40 flex flex-col relative overflow-hidden">
-          <div class="absolute top-4 right-4 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-black uppercase">Популярно</div>
-          <h3 class="text-lg font-bold text-blue-700 uppercase mb-2">90 дней</h3>
-          <div class="text-5xl font-extrabold mb-6">$25 <span class="text-lg font-normal text-slate-400">/квартал</span></div>
-          <ul class="space-y-4 mb-10 flex-grow text-slate-700">
-            <li>✅ До 3 устройств</li>
-            <li>✅ Ссылка‑подписка</li>
-            <li>✅ Приоритетная поддержка</li>
-          </ul>
-          <a class="w-full text-center py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition"
-             href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener">Подключить</a>
+        <div class="p-6 rounded-3xl border-2 border-slate-100 bg-white flex flex-col">
+          <h3 class="text-sm font-bold text-slate-500 uppercase mb-2">3 месяца</h3>
+          <div class="text-4xl font-extrabold mb-1">1350 ₽</div>
+          <div class="text-slate-400 mb-5">450 ₽ в месяц · −10%</div>
+          <a class="mt-auto w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
+             href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener">Выбрать</a>
         </div>
 
-        <div class="p-10 rounded-3xl border-2 border-slate-100 bg-white flex flex-col">
-          <h3 class="text-lg font-bold text-slate-500 uppercase mb-2">365 дней</h3>
-          <div class="text-5xl font-extrabold mb-6">$79 <span class="text-lg font-normal text-slate-400">/год</span></div>
-          <ul class="space-y-4 mb-10 flex-grow text-slate-600">
-            <li>✅ До 5 устройств</li>
-            <li>✅ Ссылка‑подписка</li>
-            <li>✅ Максимальный приоритет</li>
-          </ul>
-          <a class="w-full text-center py-4 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
-             href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener">Подключить</a>
+        <div class="p-6 rounded-3xl border-2 border-blue-600 bg-white flex flex-col relative shadow-lg">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full">Популярный</span>
+          <h3 class="text-sm font-bold text-slate-500 uppercase mb-2">6 месяцев</h3>
+          <div class="text-4xl font-extrabold mb-1">2400 ₽</div>
+          <div class="text-slate-400 mb-5">400 ₽ в месяц · −20%</div>
+          <a class="mt-auto w-full text-center py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition"
+             href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener">Выбрать</a>
+        </div>
+
+        <div class="p-6 rounded-3xl border-2 border-slate-100 bg-white flex flex-col">
+          <h3 class="text-sm font-bold text-slate-500 uppercase mb-2">12 месяцев</h3>
+          <div class="text-4xl font-extrabold mb-1">4200 ₽</div>
+          <div class="text-slate-400 mb-5">350 ₽ в месяц · −30%</div>
+          <a class="mt-auto w-full text-center py-3 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition"
+             href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener">Выбрать</a>
         </div>
       </div>
 
-      <p class="text-center text-slate-500 mt-8">
-        После оплаты бот выдаст ссылку подписки и инструкции по импорту.
+      <p class="text-center text-slate-500 mt-6">
+        Оплата банковской картой или через СБП. Продление — в любой момент, срок добавляется к текущему.
       </p>
     </div>
   </section>
 
-  <!-- Pay -->
-  <section id="pay" class="bg-white py-20 px-6">
+  <section id="faq" class="bg-white py-6 md:py-10 px-6">
     <div class="container mx-auto max-w-4xl">
-      <h2 class="text-3xl font-bold mb-6 text-center">Как оплатить</h2>
+      <h2 class="text-3xl font-bold text-center mb-5">Частые вопросы</h2>
 
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="p-8 rounded-3xl border border-slate-100">
-          <h3 class="text-xl font-extrabold mb-3">Через Telegram‑бота</h3>
-          <p class="text-slate-600 mb-6">Нажмите кнопку — бот предложит тариф, покажет способы оплаты и автоматически выдаст подписку.</p>
-          <a href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener"
-             class="inline-flex w-full justify-center py-4 rounded-2xl bg-blue-600 text-white font-extrabold hover:bg-blue-700 transition">
-            Открыть @TopVpnXray_bot
-          </a>
-        </div>
+      <div class="space-y-2">
+        <details class="p-4 rounded-2xl border border-slate-200 group">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center">
+            Чем это отличается от других VPN?
+            <span class="text-blue-600 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="text-slate-600 mt-3 leading-relaxed">Мы используем AmneziaWG 3.1 — протокол с маскировкой трафика. Его сложнее обнаружить и заблокировать, чем обычный VPN.</p>
+        </details>
 
-        <div class="p-8 rounded-3xl border border-slate-100">
-          <h3 class="text-xl font-extrabold mb-3">Что получите после оплаты</h3>
-          <ul class="text-slate-600 space-y-3">
-            <li>✅ Ссылку‑подписку VLESS</li>
-            <li>✅ Инструкцию импорта</li>
-            <li>✅ Поддержку в Telegram</li>
-          </ul>
-          <p class="text-slate-500 mt-6 text-sm">Если оплата не прошла или нужна помощь — напишите в поддержку.</p>
-        </div>
+        <details class="p-4 rounded-2xl border border-slate-200 group">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center">
+            Сколько устройств можно подключить?
+            <span class="text-blue-600 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="text-slate-600 mt-3 leading-relaxed">Один ключ рассчитан на одно устройство. Если нужно больше — напишите в поддержку, подскажем как.</p>
+        </details>
+
+        <details class="p-4 rounded-2xl border border-slate-200 group">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center">
+            Что будет, когда подписка закончится?
+            <span class="text-blue-600 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="text-slate-600 mt-3 leading-relaxed">Доступ приостановится, но настройки останутся. После оплаты всё заработает снова — переустанавливать ничего не нужно.</p>
+        </details>
+
+        <details class="p-4 rounded-2xl border border-slate-200 group">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center">
+            Можно попробовать перед покупкой?
+            <span class="text-blue-600 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="text-slate-600 mt-3 leading-relaxed">Да. Откройте бота напрямую — при первом запуске выдаётся пробный период на 3 дня.</p>
+        </details>
+
+        <details class="p-4 rounded-2xl border border-slate-200 group">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center">
+            Что-то не работает — куда писать?
+            <span class="text-blue-600 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="text-slate-600 mt-3 leading-relaxed">В поддержку прямо в Telegram — отвечаем в том же чате. Ссылка ниже, в разделе «Контакты».</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="py-20 container mx-auto px-6">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-4">FAQ</h2>
-      <p class="text-slate-500">Короткие ответы на частые вопросы.</p>
-    </div>
-
-    <div class="max-w-4xl mx-auto space-y-4">
-      <details class="bg-white border border-slate-100 rounded-2xl p-6">
-        <summary class="font-extrabold cursor-pointer">Что такое “ссылка‑подписка”?</summary>
-        <div class="mt-3 text-slate-600">
-          Это URL, который содержит набор конфигураций и обновляется автоматически. Вы добавляете ссылку один раз — дальше клиент сам обновляет список.
-        </div>
-      </details>
-
-      <details class="bg-white border border-slate-100 rounded-2xl p-6">
-        <summary class="font-extrabold cursor-pointer">Сколько устройств можно подключить?</summary>
-        <div class="mt-3 text-slate-600">
-          Зависит от тарифа: 1 / до 3 / до 5 устройств. Для семьи/команды можно подобрать вариант в боте.
-        </div>
-      </details>
-
-      <details class="bg-white border border-slate-100 rounded-2xl p-6">
-        <summary class="font-extrabold cursor-pointer">Если не получается импортировать?</summary>
-        <div class="mt-3 text-slate-600">
-          Откройте “Гайды” и повторите шаги. Если всё равно сложно — напишите в поддержку, поможем настроить.
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- Contacts -->
-  <section id="contacts" class="bg-white py-20 px-6">
-    <div class="container mx-auto max-w-4xl text-center">
+  <section id="contacts" class="py-6 md:py-10 px-6">
+    <div class="container mx-auto max-w-3xl text-center">
       <h2 class="text-3xl font-bold mb-4">Контакты</h2>
-      <p class="text-slate-500 mb-10">Подключение и управление подпиской — через бота. Поддержка — в Telegram.</p>
+      <p class="text-slate-500 mb-6">Подключение, продление и поддержка — всё в Telegram.</p>
 
-      <div class="flex flex-col md:flex-row gap-4 justify-center">
-        <a href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener"
-           class="px-10 py-4 rounded-2xl bg-blue-600 text-white font-extrabold hover:bg-blue-700 transition">
-          @TopVpnXray_bot
-        </a>
-        <a href="https://t.me/TopVpnXray_bot" target="_blank" rel="noopener"
-           class="px-10 py-4 rounded-2xl border-2 border-blue-600 text-blue-600 font-extrabold hover:bg-blue-50 transition">
-          Поддержка в Telegram
-        </a>
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="https://t.me/GetTopVPN_bot/app" target="_blank" rel="noopener"
+           class="bg-blue-600 text-white font-bold px-10 py-4 rounded-2xl hover:bg-blue-700 transition">Открыть TopVPN</a>
+        <a href="https://t.me/GetTopVPN_bot?start=support" target="_blank" rel="noopener"
+           class="border-2 border-blue-600 text-blue-600 font-bold px-10 py-4 rounded-2xl hover:bg-blue-50 transition">Написать в поддержку</a>
       </div>
-
-      <p class="text-slate-400 text-sm mt-10">
-        © <span id="year"></span> TopVPN. Сделано для удобного доступа в интернет.
-      </p>
     </div>
   </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <footer class="bg-slate-900 text-slate-400 py-8 px-6">
+    <div class="container mx-auto max-w-4xl text-center">
+      <div class="text-white font-extrabold text-xl mb-4">TopVPN</div>
+      <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm">
+        <a href="https://telegra.ph/POLITIKA-KONFIDENCIALNOSTI-08-12-99" target="_blank" rel="noopener" class="hover:text-white transition">Политика конфиденциальности</a>
+        <a href="https://telegra.ph/PUBLICHNAYA-OFERTA-08-12-15" target="_blank" rel="noopener" class="hover:text-white transition">Пользовательское соглашение</a>
+        <a href="https://t.me/GetTopVPN_bot?start=support" target="_blank" rel="noopener" class="hover:text-white transition">Поддержка</a>
+      </div>
+      <p class="text-xs">TopVPN — сервис для свободного доступа в интернет.</p>
+    </div>
+  </footer>
 </body>
 </html>
