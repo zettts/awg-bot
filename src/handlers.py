@@ -118,7 +118,7 @@ async def show_menu(bot: Bot, chat_id: int, message_id: int = None):
         )
 
 @router.message(Command("start"))
-async def start_cmd(message: Message, bot: Bot):
+async def start_cmd(message: Message, bot: Bot, state: FSMContext = None):
     logger.info(f"ℹ️  Start command from {message.from_user.id}")
     user = await get_user(message.from_user.id)
     
@@ -159,6 +159,17 @@ async def start_cmd(message: Message, bot: Bot):
             session.commit()
             logger.info(f"🔄 Updated user data: {message.from_user.id}")
     
+    # Параметр из рекламы/сайта: /start support — меню + приглашение написать вопрос
+    parts_raw = (message.text or "").split(maxsplit=1)
+    if len(parts_raw) == 2 and parts_raw[1].strip() == "support":
+        await show_menu(bot, message.from_user.id)
+        await message.answer(
+            "🆘 Напишите ваш вопрос одним сообщением — он будет передан в поддержку."
+        )
+        if state:
+            await state.set_state(UserStates.WAITING_SUPPORT_MESSAGE)
+        return
+
     # Параметр из Mini App: /start buy_<months>_<platform>
     parts = (message.text or "").split(maxsplit=1)
     if len(parts) == 2 and parts[1].startswith("buy_"):
