@@ -71,7 +71,7 @@
 <header>
   <img class="logo" src="logo.png" alt="TopVPN" />
   <h1>TopVPN</h1>
-  <p class="lead">Быстрый доступ без ограничений.<br/>Работает там, где остальные не проходят.</p>
+  <p class="lead" id="leadText">Быстрый доступ без ограничений.<br/>Работает там, где остальные не проходят.</p>
 </header>
 
 <section>
@@ -84,7 +84,7 @@
   </div>
 </section>
 
-<section>
+<section id="osSection">
   <h2>Устройство</h2>
   <div class="os-grid" id="osGrid">
     <div class="os" data-os="ios">📱 iPhone / iPad</div>
@@ -102,7 +102,7 @@
 
 <section>
   <button class="btn btn-white" id="connectBtn">Подключить</button>
-  <p class="note" id="connectNote">Выберите тариф и устройство — доступ придёт в чат с ботом.</p>
+  <p class="note" id="connectNote">Откроется чат с ботом — нажмите кнопку Начать для подключения.</p>
 </section>
 
 <footer>
@@ -124,7 +124,7 @@
   };
 
   var STEPS = {
-    ios: ["Установите DefaultVPN","Скопируйте ключ из чата с ботом","В приложении: + -> «Вставить» -> «Добавить» -> Connect"],
+    ios: ["Установите DefaultVPN","Скопируйте ключ из чата с ботом","В приложении: + -> «Вставить» -> «Добавить» -> «Подключить»"],
     android: ["Установите AmneziaWG","Откройте файл vpn.conf из чата с ботом","Подтвердите импорт и включите тоннель"],
     windows: ["Скачайте и установите AmneziaWG","Сохраните файл vpn.conf из чата с ботом","В приложении: «Import tunnel(s) from file» -> выберите файл -> «Connect»"],
     macos: ["Установите AmneziaWG","Сохраните файл vpn.conf из чата с ботом","В приложении: «Import tunnel(s) from file» -> выберите файл -> «Connect»"],
@@ -134,6 +134,25 @@
   var NOTES = { linux: "Не отключайте IPv6 в системе — иначе кнопка подключения не работает." };
 
   var months = null, os = null;
+
+  // Режим продления: t.me/GetTopVPN_bot/app?startapp=renew
+  var isRenew = false;
+  try {
+    var sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || "";
+    if (!sp) {
+      var m = window.location.search.match(/[?&]tgWebAppStartParam=([^&]+)/);
+      if (m) sp = decodeURIComponent(m[1]);
+    }
+    isRenew = (sp === "renew");
+  } catch (e) {}
+
+  if (isRenew) {
+    os = "renew";
+    document.getElementById("osSection").style.display = "none";
+    document.getElementById("leadText").innerHTML = "Продление подписки.<br/>Выберите срок — счёт придёт в чат с ботом.";
+    document.getElementById("connectBtn").textContent = "Продлить";
+    document.getElementById("connectNote").textContent = "Счёт придёт в чат с ботом. Срок добавится к текущему.";
+  }
 
   function findParent(node, cls){
     while (node && node !== document) {
@@ -180,7 +199,7 @@
   var btn = document.getElementById("connectBtn");
   btn.addEventListener("click", function(){
     if (!months) { notify("Выберите тариф"); return; }
-    if (!os) { notify("Выберите устройство"); return; }
+    if (!isRenew && !os) { notify("Выберите устройство"); return; }
 
     var param = "buy_" + months + "_" + os;
     var link = "https://t.me/GetTopVPN_bot?start=" + param;

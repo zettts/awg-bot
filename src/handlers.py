@@ -85,7 +85,10 @@ async def show_menu(bot: Bot, chat_id: int, message_id: int = None):
     )
     
     builder = InlineKeyboardBuilder()
-    builder.button(text="💵 Продлить" if status=="Активна" else "💵 Оплатить", callback_data="renew_sub")
+    if status == "Активна":
+        builder.button(text="💵 Продлить", url="https://t.me/GetTopVPN_bot/app?startapp=renew")
+    else:
+        builder.button(text="💵 Оплатить", callback_data="renew_sub")
     builder.button(text="✅ Подключить", callback_data="connect")
     builder.button(text="📊 Статистика", callback_data="stats")
     builder.button(text="ℹ️ Помощь", callback_data="help")
@@ -180,7 +183,7 @@ async def start_cmd(message: Message, bot: Bot, state: FSMContext = None):
             except ValueError:
                 months = None
             platform = bits[2]
-            if months and platform in PLATFORM_TEXTS:
+            if months and (platform in PLATFORM_TEXTS or platform == "renew"):
                 await start_purchase_flow(message, bot, months, platform)
                 return
 
@@ -191,10 +194,6 @@ async def start_purchase_flow(message: Message, bot: Bot, months: int, platform:
     """Обрабатывает выбор из Mini App: активная подписка -> инструкция, иначе -> счёт."""
     user = await get_user(message.from_user.id)
     if not user:
-        return
-
-    if user.subscription_end > datetime.utcnow():
-        await send_platform_instructions(message, user, platform)
         return
 
     pricing = await get_pricing()
@@ -520,7 +519,7 @@ async def _wait_and_finalize_payment(bot: Bot, telegram_id: int, payment_id: str
                 reply_markup=done_kb.as_markup()
             )
 
-            if platform:
+            if platform and platform != "renew":
                 fresh_user = await get_user(telegram_id)
                 if fresh_user:
                     try:
