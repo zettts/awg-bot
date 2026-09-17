@@ -39,6 +39,7 @@ async def create_payment(amount_rub: str, order_id: str, description: str, test:
             "amount": amount_rub,
             "order_id": order_id,
             "payment_currency": "RUB",
+            "payment_method": "sbp",
             "description": description,
             "terminal_id": config.ROLLYPAY_TERMINAL_ID,
             "test": test,
