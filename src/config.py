@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Dict
 
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 class Config(BaseModel):
     BOT_TOKEN: str = os.getenv("BOT_TOKEN", "")
@@ -13,6 +13,10 @@ class Config(BaseModel):
     ROLLYPAY_SIGNING_SECRET: str = os.getenv("ROLLYPAY_SIGNING_SECRET", "")
     ROLLYPAY_TEST_MODE: bool = os.getenv("ROLLYPAY_TEST_MODE", "false").lower() == "true"
     PANEL_PASSWORD: str = os.getenv("PANEL_PASSWORD", "")
+    XUI_API_URL: str = os.getenv("XUI_API_URL", "http://127.0.0.1:2053")
+    XUI_API_TOKEN: str = os.getenv("XUI_API_TOKEN", "")
+    XUI_VERIFY_SSL: bool = os.getenv("XUI_VERIFY_SSL", "false").lower() == "true"
+    INBOUND_ID: int = int(os.getenv("INBOUND_ID", "1"))
 
     # Настройки цен и скидок
     PRICES: Dict[int, Dict[str, int]] = {
