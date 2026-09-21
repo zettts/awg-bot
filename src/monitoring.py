@@ -6,6 +6,10 @@ IHOR_USER = "root"
 IHOR_SSH_KEY = "/home/ubuntu/.ssh/ihor_tunnel"
 
 COMBINED_CMD = "top -bn1 | grep 'Cpu(s)'; free -m; df -h /"
+NETWORK_CMD = (
+    "cat /sys/class/net/ens3/statistics/rx_bytes; "
+    "cat /sys/class/net/ens3/statistics/tx_bytes"
+)
 
 
 async def _run_local(cmd: str) -> str:
@@ -69,3 +73,55 @@ async def get_ihor_stats() -> dict:
         return _parse_stats(raw)
     except Exception:
         return {"cpu": "ошибка", "ram": "ошибка", "swap": "ошибка", "disk": "ошибка"}
+
+
+def _parse_network_counters(raw: str) -> tuple[int, int]:
+    values = [int(value) for value in raw.split() if value.isdigit()]
+    if len(values) < 2:
+        raise ValueError("network counters are unavailable")
+    return values[0], values[1]
+
+
+async def _network_counters(remote: bool) -> tuple[int, int]:
+    raw = await (_run_remote(NETWORK_CMD) if remote else _run_local(NETWORK_CMD))
+    return _parse_network_counters(raw)
+
+
+async def get_network_stats() -> dict:
+    """Current and boot-total traffic for Oracle and Ihor public interfaces."""
+    try:
+        first_oracle, first_ihor = await asyncio.gather(
+            _network_counters(False),
+            _network_counters(True),
+        )
+        started = asyncio.get_running_loop().time()
+        await asyncio.sleep(1)
+        second_oracle, second_ihor = await asyncio.gather(
+            _network_counters(False),
+            _network_counters(True),
+        )
+        elapsed = max(asyncio.get_running_loop().time() - started, 0.001)
+
+        def node(first: tuple[int, int], second: tuple[int, int]) -> dict:
+            return {
+                "rx_total": second[0],
+                "tx_total": second[1],
+                "rx_bps": max(0, second[0] - first[0]) * 8 / elapsed,
+                "tx_bps": max(0, second[1] - first[1]) * 8 / elapsed,
+            }
+
+        oracle = node(first_oracle, second_oracle)
+        ihor = node(first_ihor, second_ihor)
+        return {
+            "oracle": oracle,
+            "ihor": ihor,
+            "total": {
+                "rx_total": oracle["rx_total"] + ihor["rx_total"],
+                "tx_total": oracle["tx_total"] + ihor["tx_total"],
+                "rx_bps": oracle["rx_bps"] + ihor["rx_bps"],
+                "tx_bps": oracle["tx_bps"] + ihor["tx_bps"],
+            },
+        }
+    except Exception:
+        empty = {"rx_total": 0, "tx_total": 0, "rx_bps": 0, "tx_bps": 0}
+        return {"oracle": empty.copy(), "ihor": empty.copy(), "total": empty.copy(), "error": True}

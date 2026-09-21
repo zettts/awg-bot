@@ -19,11 +19,11 @@ from database import (
     User, Session, get_user_stats as db_user_stats, delete_user,
     get_pricing, update_pricing_tier, calculate_final_price
 )
-from monitoring import get_oracle_stats, get_ihor_stats
+from monitoring import get_oracle_stats, get_ihor_stats, get_network_stats
 from rollypay_integration import create_payment, poll_payment_until_final
 from functions import (
     create_awg_profile, delete_client_by_id, delete_client_by_name,
-    get_client_stats, create_static_client, get_global_stats,
+    get_client_stats, create_static_client,
     get_online_users, set_client_enabled,
 )
 
@@ -987,18 +987,41 @@ async def user_stats(callback: CallbackQuery):
 
 @router.callback_query(F.data == "admin_network_stats")
 async def network_stats(callback: CallbackQuery):
-    stats = await get_global_stats()
+    await callback.answer("⏳ Собираем трафик с обоих серверов...")
+    stats = await get_network_stats()
 
-    download_mbps = stats.get("download", 0) / 1_000_000
-    upload_mbps = stats.get("upload", 0) / 1_000_000
+    def size(value: int) -> str:
+        amount = float(value)
+        units = ("Б", "КБ", "МБ", "ГБ", "ТБ")
+        unit = units[0]
+        for unit in units:
+            if amount < 1024 or unit == units[-1]:
+                break
+            amount /= 1024
+        return f"{amount:.2f} {unit}"
 
-    await callback.answer()
+    def server_block(label: str, values: dict) -> str:
+        return (
+            f"{label}\n"
+            f"🔽 Получено: `{size(values['rx_total'])}`\n"
+            f"🔼 Отправлено: `{size(values['tx_total'])}`\n"
+            f"⚡ Сейчас: `↓ {values['rx_bps'] / 1_000_000:.2f}` / "
+            f"`↑ {values['tx_bps'] / 1_000_000:.2f} Мбит/с`"
+        )
+
     text = (
-        "📊 **Статистика сети (сейчас):**\n\n"
-        f"🔼 Upload - `{upload_mbps:.2f} Мбит/с` | 🔽 Download - `{download_mbps:.2f} Мбит/с`"
+        "📊 **Статистика использования сети**\n\n"
+        f"{server_block('🇳🇱 **NL**', stats['oracle'])}\n\n"
+        f"{server_block('🇷🇺 **RU**', stats['ihor'])}\n\n"
+        f"{server_block('∑ **Оба сервера**', stats['total'])}\n\n"
+        "_Накопленный трафик — с момента последней загрузки каждого VPS._"
     )
+    if stats.get("error"):
+        text += "\n\n⚠️ Не удалось получить часть сетевых счётчиков."
     builder = InlineKeyboardBuilder()
+    builder.button(text="🔄 Обновить", callback_data="admin_network_stats")
     builder.button(text="⬅️ Назад", callback_data="admin_menu")
+    builder.adjust(1, 1)
     await callback.message.edit_text(text, parse_mode='Markdown', reply_markup=builder.as_markup())
 
 @router.callback_query(F.data == "admin_delete_user")
