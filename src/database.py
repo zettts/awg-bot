@@ -224,10 +224,10 @@ def validate_and_fix_subscription_date(subscription_end: datetime) -> datetime:
     
     return subscription_end
 DEFAULT_PRICING = {
-    1: {"base_price": 500, "discount_percent": 0},
-    3: {"base_price": 1500, "discount_percent": 10},
-    6: {"base_price": 3000, "discount_percent": 20},
-    12: {"base_price": 6000, "discount_percent": 30},
+    1: {"base_price": 300, "discount_percent": 0},
+    3: {"base_price": 850, "discount_percent": 0},
+    6: {"base_price": 1600, "discount_percent": 0},
+    12: {"base_price": 3000, "discount_percent": 0},
 }
 
 async def init_default_pricing():
