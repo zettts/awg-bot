@@ -1261,9 +1261,9 @@ PLATFORM_PROMPT = "🔌 Выберите вашу платформу:"
 APP_LINKS = {
     "ios": ("📥 Установить DefaultVPN", "https://apps.apple.com/app/defaultvpn/id6744725017"),
     "android": ("📥 Установить AmneziaVPN", "https://play.google.com/store/apps/details?id=org.amnezia.vpn"),
-    "windows": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
-    "macos": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
-    "linux": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
+    "windows": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/download/5.0.3.0/AmneziaVPN_5.0.3.0_windows_x64.exe"),
+    "macos": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/download/5.0.3.0/AmneziaVPN_5.0.3.0_macos_x64.pkg"),
+    "linux": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/download/5.0.3.0/AmneziaVPN_5.0.3.0_linux_x64.run"),
 }
 
 PLATFORM_TEXTS = {
