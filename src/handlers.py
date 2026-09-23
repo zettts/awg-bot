@@ -1260,9 +1260,9 @@ PLATFORM_PROMPT = "🔌 Выберите вашу платформу:"
 
 APP_LINKS = {
     "ios": ("📥 Установить DefaultVPN", "https://apps.apple.com/app/defaultvpn/id6744725017"),
-    "android": ("📥 Установить AmneziaWG", "https://play.google.com/store/apps/details?id=org.amnezia.awg"),
-    "windows": ("📥 Скачать AmneziaWG", "https://github.com/amnezia-vpn/amneziawg-windows-client/releases/download/3.1.0/amneziawg-amd64-3.1.0.msi"),
-    "macos": ("📥 Установить AmneziaWG", "https://apps.apple.com/app/amneziawg/id6478942365"),
+    "android": ("📥 Установить AmneziaVPN", "https://play.google.com/store/apps/details?id=org.amnezia.vpn"),
+    "windows": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
+    "macos": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
     "linux": ("📥 Скачать AmneziaVPN", "https://github.com/amnezia-vpn/amnezia-client/releases/latest"),
 }
 
@@ -1276,32 +1276,30 @@ PLATFORM_TEXTS = {
     ),
     "android": (
         "🤖 <b>Подключение на Android</b>\n\n"
-        "1. Установите AmneziaWG по кнопке ниже\n"
-        "2. Откройте файл vpn.conf из сообщения ниже — приложение предложит импорт\n"
-        "3. Подтвердите импорт и включите тоннель\n\n"
+        "1. Установите AmneziaVPN по кнопке ниже\n"
+        "2. Скопируйте ключ vpn:// из сообщения ниже\n"
+        "3. В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь\n\n"
         "✅ Готово"
     ),
     "windows": (
         "🪟 <b>Подключение на Windows</b>\n\n"
-        "1. Скачайте и установите AmneziaWG по кнопке ниже\n"
-        "2. Сохраните файл vpn.conf из сообщения ниже\n"
-        "3. В приложении нажмите «Import tunnel(s) from file» и выберите этот файл\n"
-        "4. Нажмите «Connect»\n\n"
+        "1. Скачайте и установите AmneziaVPN по кнопке ниже\n"
+        "2. Скопируйте ключ vpn:// из сообщения ниже\n"
+        "3. В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь\n\n"
         "✅ Готово"
     ),
     "macos": (
         "🍎 <b>Подключение на macOS</b>\n\n"
-        "1. Установите AmneziaWG по кнопке ниже\n"
-        "2. Сохраните файл vpn.conf из сообщения ниже\n"
-        "3. В приложении нажмите «Import tunnel(s) from file» и выберите этот файл\n"
-        "4. Нажмите «Connect»\n\n"
+        "1. Скачайте и установите AmneziaVPN по кнопке ниже\n"
+        "2. Скопируйте ключ vpn:// из сообщения ниже\n"
+        "3. В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь\n\n"
         "✅ Готово"
     ),
     "linux": (
         "🐧 <b>Подключение на Linux</b>\n\n"
-        "1. Скачайте AmneziaVPN (.run) по кнопке ниже и запустите установщик\n"
-        "2. Добавьте подключение: файлом vpn.conf или ключом из сообщения ниже\n"
-        "3. Нажмите «Подключить»\n\n"
+        "1. Скачайте и установите AmneziaVPN по кнопке ниже\n"
+        "2. Скопируйте ключ vpn:// из сообщения ниже\n"
+        "3. В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь\n\n"
         "⚠️ Не отключайте IPv6 в системе — иначе кнопка подключения не работает\n\n"
         "✅ Готово"
     ),
@@ -1347,8 +1345,6 @@ async def platform_instructions(callback: CallbackQuery):
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform == "android":
-        builder.button(text="📷 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="⬅️ Назад", callback_data="connect")
     builder.button(text="🏠 В меню", callback_data="back_to_menu")
     builder.adjust(1, 1, 2)
@@ -1366,14 +1362,11 @@ async def platform_instructions(callback: CallbackQuery):
             parse_mode="HTML",
         )
 
-    if platform == "ios":
-        if vpn_link:
-            await callback.message.answer(quoted_key(vpn_link), parse_mode="HTML")
+    if vpn_link:
+        await callback.message.answer(quoted_key(vpn_link), parse_mode="HTML")
     else:
         config_file = BufferedInputFile(config_text.encode("utf-8"), filename="vpn.conf")
         await callback.message.answer_document(document=config_file)
-        if platform == "linux" and vpn_link:
-            await callback.message.answer(quoted_key(vpn_link), parse_mode="HTML")
 
 
 @router.callback_query(F.data.startswith("qr_"))
@@ -1433,8 +1426,6 @@ async def send_platform_instructions(message: Message, user, platform: str):
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform == "android":
-        builder.button(text="\U0001f4f7 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="\u2b05\ufe0f Назад", callback_data="connect")
     builder.button(text="\U0001f3e0 В меню", callback_data="back_to_menu")
     builder.adjust(1, 1, 2)
@@ -1445,14 +1436,11 @@ async def send_platform_instructions(message: Message, user, platform: str):
         parse_mode="HTML",
     )
 
-    if platform == "ios":
-        if vpn_link:
-            await message.answer(quoted_key(vpn_link), parse_mode="HTML")
+    if vpn_link:
+        await message.answer(quoted_key(vpn_link), parse_mode="HTML")
     else:
         config_file = BufferedInputFile(config_text.encode("utf-8"), filename="vpn.conf")
         await message.answer_document(document=config_file)
-        if platform == "linux" and vpn_link:
-            await message.answer(quoted_key(vpn_link), parse_mode="HTML")
 
 
 @router.message(F.web_app_data)
@@ -1550,19 +1538,14 @@ async def send_platform_instructions_to(bot: Bot, chat_id: int, user, platform: 
     label, url = APP_LINKS[platform]
     builder = InlineKeyboardBuilder()
     builder.button(text=label, url=url)
-    if platform == "android":
-        builder.button(text="\U0001f4f7 Показать QR-код", callback_data=f"qr_{platform}")
     builder.button(text="\u2b05\ufe0f Назад", callback_data="connect")
     builder.button(text="\U0001f3e0 В меню", callback_data="back_to_menu")
     builder.adjust(1, 1, 2)
 
     await bot.send_message(chat_id, PLATFORM_TEXTS[platform], reply_markup=builder.as_markup(), parse_mode="HTML")
 
-    if platform == "ios":
-        if vpn_link:
-            await bot.send_message(chat_id, quoted_key(vpn_link), parse_mode="HTML")
+    if vpn_link:
+        await bot.send_message(chat_id, quoted_key(vpn_link), parse_mode="HTML")
     else:
         config_file = BufferedInputFile(config_text.encode("utf-8"), filename="vpn.conf")
         await bot.send_document(chat_id, document=config_file)
-        if platform == "linux" and vpn_link:
-            await bot.send_message(chat_id, quoted_key(vpn_link), parse_mode="HTML")

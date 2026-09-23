@@ -118,18 +118,18 @@
 
   var APPS = {
     ios:     {name:"DefaultVPN",  url:"https://apps.apple.com/app/defaultvpn/id6744725017"},
-    android: {name:"AmneziaWG",   url:"https://play.google.com/store/apps/details?id=org.amnezia.awg"},
-    windows: {name:"AmneziaWG",   url:"https://github.com/amnezia-vpn/amneziawg-windows-client/releases/download/3.1.0/amneziawg-amd64-3.1.0.msi"},
-    macos:   {name:"AmneziaWG",   url:"https://apps.apple.com/app/amneziawg/id6478942365"},
+    android: {name:"AmneziaVPN",  url:"https://play.google.com/store/apps/details?id=org.amnezia.vpn"},
+    windows: {name:"AmneziaVPN",  url:"https://github.com/amnezia-vpn/amnezia-client/releases/latest"},
+    macos:   {name:"AmneziaVPN",  url:"https://github.com/amnezia-vpn/amnezia-client/releases/latest"},
     linux:   {name:"AmneziaVPN",  url:"https://github.com/amnezia-vpn/amnezia-client/releases/latest"}
   };
 
   var STEPS = {
     ios: ["Установите DefaultVPN","Скопируйте ключ из чата с ботом","В приложении: + -> «Вставить» -> «Добавить» -> «Подключить»"],
-    android: ["Установите AmneziaWG","Откройте файл vpn.conf из чата с ботом","Подтвердите импорт и включите тоннель"],
-    windows: ["Скачайте и установите AmneziaWG","Сохраните файл vpn.conf из чата с ботом","В приложении: «Import tunnel(s) from file» -> выберите файл -> «Connect»"],
-    macos: ["Установите AmneziaWG","Сохраните файл vpn.conf из чата с ботом","В приложении: «Import tunnel(s) from file» -> выберите файл -> «Connect»"],
-    linux: ["Скачайте AmneziaVPN (.run) и запустите установщик","Добавьте подключение файлом vpn.conf или ключом из чата","Нажмите «Подключить»"]
+    android: ["Установите AmneziaVPN","Скопируйте ключ vpn:// из чата с ботом","В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь"],
+    windows: ["Скачайте и установите AmneziaVPN","Скопируйте ключ vpn:// из чата с ботом","В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь"],
+    macos: ["Скачайте и установите AmneziaVPN","Скопируйте ключ vpn:// из чата с ботом","В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь"],
+    linux: ["Скачайте и установите AmneziaVPN","Скопируйте ключ vpn:// из чата с ботом","В приложении добавьте подключение по ключу, вставьте ссылку и подключитесь"]
   };
 
   var NOTES = { linux: "Не отключайте IPv6 в системе — иначе кнопка подключения не работает." };
