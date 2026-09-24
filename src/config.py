@@ -17,6 +17,8 @@ class Config(BaseModel):
     XUI_API_TOKEN: str = os.getenv("XUI_API_TOKEN", "")
     XUI_VERIFY_SSL: bool = os.getenv("XUI_VERIFY_SSL", "false").lower() == "true"
     INBOUND_ID: int = int(os.getenv("INBOUND_ID", "1"))
+    TOPVPN_EMAIL_STATS_URL: str = os.getenv("TOPVPN_EMAIL_STATS_URL", "")
+    TOPVPN_EMAIL_STATS_TOKEN: str = os.getenv("TOPVPN_EMAIL_STATS_TOKEN", "")
 
     # Настройки цен и скидок
     PRICES: Dict[int, Dict[str, int]] = {

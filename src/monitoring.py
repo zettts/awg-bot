@@ -1,5 +1,10 @@
 import asyncio
+import logging
 import re
+import aiohttp
+from config import config
+
+logger = logging.getLogger(__name__)
 
 IHOR_HOST = "95.81.76.197"
 IHOR_USER = "root"
@@ -125,3 +130,21 @@ async def get_network_stats() -> dict:
     except Exception:
         empty = {"rx_total": 0, "tx_total": 0, "rx_bps": 0, "tx_bps": 0}
         return {"oracle": empty.copy(), "ihor": empty.copy(), "total": empty.copy(), "error": True}
+
+
+async def get_email_usage():
+    """Read aggregate email attempt counters from the account API."""
+    if not config.TOPVPN_EMAIL_STATS_URL or not config.TOPVPN_EMAIL_STATS_TOKEN:
+        return None
+    timeout = aiohttp.ClientTimeout(total=10)
+    try:
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(
+                config.TOPVPN_EMAIL_STATS_URL,
+                headers={"Authorization": f"Bearer {config.TOPVPN_EMAIL_STATS_TOKEN}"},
+            ) as response:
+                response.raise_for_status()
+                return await response.json()
+    except Exception as error:
+        logger.warning("Email usage stats unavailable: %s", type(error).__name__)
+        return None

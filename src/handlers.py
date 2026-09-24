@@ -19,7 +19,7 @@ from database import (
     User, Session, get_user_stats as db_user_stats, delete_user,
     get_pricing, update_pricing_tier, calculate_final_price
 )
-from monitoring import get_oracle_stats, get_ihor_stats, get_network_stats
+from monitoring import get_oracle_stats, get_ihor_stats, get_network_stats, get_email_usage
 from rollypay_integration import create_payment, poll_payment_until_final
 from functions import (
     create_awg_profile, delete_client_by_id, delete_client_by_name,
@@ -987,8 +987,8 @@ async def user_stats(callback: CallbackQuery):
 
 @router.callback_query(F.data == "admin_network_stats")
 async def network_stats(callback: CallbackQuery):
-    await callback.answer("⏳ Собираем трафик с обоих серверов...")
-    stats = await get_network_stats()
+    await callback.answer("⏳ Собираем статистику серверов и писем...")
+    stats, email_usage = await asyncio.gather(get_network_stats(), get_email_usage())
 
     def size(value: int) -> str:
         amount = float(value)
@@ -1016,6 +1016,15 @@ async def network_stats(callback: CallbackQuery):
         f"{server_block('∑ **Оба сервера**', stats['total'])}\n\n"
         "_Накопленный трафик — с момента последней загрузки каждого VPS._"
     )
+    if email_usage:
+        day, month = email_usage["day"], email_usage["month"]
+        text += (
+            "\n\n📨 **Отправка писем**\n"
+            f"Сегодня: `{day['attempts']}/{day['limit']}` попыток\n"
+            f"За месяц: `{month['attempts']}/{month['limit']}` попыток (UTC)"
+        )
+    else:
+        text += "\n\n📨 **Отправка писем:** статистика пока недоступна."
     if stats.get("error"):
         text += "\n\n⚠️ Не удалось получить часть сетевых счётчиков."
     builder = InlineKeyboardBuilder()

@@ -77,6 +77,8 @@ python src/temp_profile_server.py
 - `PAYMENT_TOKEN` - платежный токен от @BotFather
 - `ADMINS` - ID администраторов через запятую
 - `XUI_API_URL` - URL панели 3X-UI (например: http://ip:54321)
+- `TOPVPN_EMAIL_STATS_URL` - защищённый endpoint с агрегированной статистикой отправки писем
+- `TOPVPN_EMAIL_STATS_TOKEN` - отдельный read-only токен для этого endpoint
 - `XUI_USERNAME` и `XUI_PASSWORD` - учетные данные панели
 - `INBOUND_ID` - ID инбаунда в панели 3X-UI
 - Параметры Reality (публичный ключ, fingerprint, SNI и т.д.)
